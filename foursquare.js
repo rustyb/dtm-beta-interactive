@@ -8,7 +8,7 @@ foursquare.venues = [];
 // Get venues
 foursquare.start = _.throttle(function(){
     // Default ajax params
-  	mmg.removeAllMarkers();
+  	MM_map.foursquare.removeAllMarkers();
     foursquare.getVenues();
 }, 20000);
 
