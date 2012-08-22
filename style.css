@@ -273,7 +273,7 @@ a.zoomer {
   background: url(http://a.tiles.mapbox.com/v3/marker/pin-m+fff.png) no-repeat center center;
   }
 .mmg:after {
-  background: url(http://a.tiles.mapbox.com/v3/marker/pin-m+41a900.png) no-repeat center center;
+  background: url(http://a.tiles.mapbox.com/v3/marker/pin-m-rail+41a900.png) no-repeat center center;
   content: ' ';
   position: absolute;
   width: 26px;
