@@ -1,30 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <title>Foursquare Store Locator</title>
-    <link rel="stylesheet" href="map.css" type="text/css" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <link rel="shortcut icon" href="http://mapbox.com/images/favicon.ico" type="image/x-icon" />
+  <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.4/mapbox.uncompressed.js'></script>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.4/mapbox.css' rel='stylesheet' />
+  <script src="https://raw.github.com/ded/reqwest/master/reqwest.js"></script>
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
 </head>
-<body class="left">
-    <div id="content" style="display:none;"><div class="limiter">
-        <h1>Store Locator</h1>
-        <a id="showall" class="hidden" href="#">Address filter</a>
-        <div id="no-venues" class="hidden">Oops! Looks like there are no <strong>sweetgreen</strong> locations within five miles of this address. Try another search.</div>
-    </div></div>
-    <div id="map" class="map"></div>
-    <a href="https://foursquare.com/" target="_blank">
-        <img id="fsq-attribution" src="img/powered-by.png">
-    </a>
-    <div id="search" style="display:none;">
-       <form class="geocode">
-         <input placeholder='Enter city, state, or ZIP' type="text">
-         <input type='submit' />
-         <div id='geocode-error'></div>
-       </form>
-    </div>
-
+<body>
+<div id='map'></div>
 <script>
 
   function processToGeoJSON(features) {
