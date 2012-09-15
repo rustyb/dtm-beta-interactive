@@ -62,14 +62,15 @@
           markerLayer.features(f);
     }
     // Set a custom formatter for tooltips
-    	// Provide a function that returns html to be used in tooltip
-  		// The default formatter function
-		interaction.formatter(function(feature) {
-        	var o = '<h2>' + feature.message + '</h2>';
-        	return o;
-    	});
-          window.setTimeout(updateTrains, 10000);
-      }});
+    // Provide a function that returns html to be used in tooltip
+    interaction.formatter(function(feature) {
+        var o = '<a target="_blank" href="' + feature.properties.status + '">' +
+            '<img src="' + feature.properties.title + '">' +
+            '<h2>' + feature.properties.direction + '</h2>' +
+            '</a>';
+
+        return o;
+    });
     
     
 
