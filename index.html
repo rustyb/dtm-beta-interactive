@@ -46,7 +46,7 @@
     updateTrains();
      // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
-  	interaction.formatter(markersLayer(feature) {
+  	interaction(markersLayer).formatter(function(feature) {
         var o = '<h2>' + feature.properties.message + '</h2>';
         return o;
     });
