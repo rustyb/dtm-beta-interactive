@@ -60,17 +60,16 @@
         success: function(d) {
           var f = processToGeoJSON(d.ArrayOfObjTrainPositions.objTrainPositions);
           markerLayer.features(f);
-          // Set a custom formatter for tooltips
+    }
+    // Set a custom formatter for tooltips
     	// Provide a function that returns html to be used in tooltip
   		// The default formatter function
-		interaction.formatter(function(feature) {
+		mapbox.markers.interaction.formatter(function(feature) {
         	var o = '<h2>' + props.message + '</h2>';
         	return o;
     	});
           window.setTimeout(updateTrains, 10000);
       }});
-    }
-    
     
     
 
