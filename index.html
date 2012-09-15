@@ -52,7 +52,7 @@
     // Provide a function that returns html to be used in tooltip
     markersLayer.interaction.formatter(function(feature) {
         var o = '<h2>' + feature.properties.direction + '</h2>' +
-            '<p>' + feature.properties.message + '</p>';
+            '<p>' + feature.properties.message.replace(/\\n/g, "<br/>") + '</p>';
 
         return o;
     });
