@@ -38,15 +38,16 @@
   }
 
 
-  mapbox.auto('map', 'http://a.tiles.mapbox.com/v3/mapbox.blue-marble-topo-bathy-jan.jsonp', function(map) {
+  mapbox.auto('map', 'http://a.tiles.mapbox.com/v3/rusty.map-dqtn0sfi.jsonp', function(map) {
     map.centerzoom({
       lat: 53.3428,
-      lon: -6.2661}, 11);
-    
-    var markerLayer = mapbox.markers.layer();
-    mapbox.markers.interaction(markerLayer);
-    map.addLayer(markerLayer);
+      lon: -6.2661}, 13);
+
+    var markersLayer = mapbox.markers.layer();
+    mapbox.markers.interaction(markersLayer);
+    map.addLayer(markersLayer);
     updateTrains();
+
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
     interaction.formatter(function(feature) {
@@ -57,7 +58,7 @@
 
         return o;
     });
-
+    
     function updateTrains() {
       reqwest({
           url: 'http://dtm-api.herokuapp.com/json_it.json?callback=?',
