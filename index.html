@@ -46,6 +46,14 @@
     var markersLayer = mapbox.markers.layer();
     mapbox.markers.interaction(markersLayer);
     map.addLayer(markersLayer);
+    // Set a custom formatter for tooltips
+    // Provide a function that returns html to be used in tooltip
+    interaction.formatter(function(feature) {
+        var o = '<h2>' + feature.properties.title + '</h2>';
+
+        return o;
+    });
+    
     updateTrains();
 
     function updateTrains() {
