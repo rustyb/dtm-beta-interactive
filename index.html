@@ -43,9 +43,9 @@
       lat: 53.3428,
       lon: -6.2661}, 11);
     
-    var markersLayer = mapbox.markers.layer();
-    mapbox.markers.interaction(markersLayer);
-    map.addLayer(markersLayer);
+    var markerLayer = mapbox.markers.layer();
+    mapbox.markers.interaction(markerLayer);
+    map.addLayer(markerLayer);
     
     updateTrains();
     
@@ -59,13 +59,13 @@
         accepts: "application/json",
         success: function(d) {
           var f = processToGeoJSON(d.ArrayOfObjTrainPositions.objTrainPositions);
-          markersLayer.features(f);
+          markerLayer.features(f);
           window.setTimeout(updateTrains, 10000);
       }});
     }
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
-  	mapbox.interaction.formatter(function(feature) {
+  	interaction.formatter(function(feature) {
         var o = '<h2>' + feature.properties.message + '</h2>';
         return o;
     });
