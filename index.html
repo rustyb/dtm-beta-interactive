@@ -50,7 +50,7 @@
 
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
-    interaction.formatter(function(feature) {
+    mapbox.markers.interaction.formatter(function(feature) {
         var o = '<a target="_blank" href="' + feature.properties.status + '">' +
             '<img src="' + feature.properties.title + '">' +
             '<h2>' + feature.properties.direction + '</h2>' +
