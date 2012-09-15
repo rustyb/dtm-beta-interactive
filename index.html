@@ -65,7 +65,7 @@
     }
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
-  	map.interaction.formatter(function(feature) {
+  	markersLayer.interaction.formatter(function(feature) {
         var o = '<h2>' + feature.properties.message + '</h2>';
         return o;
     });
