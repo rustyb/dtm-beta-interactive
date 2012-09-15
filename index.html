@@ -48,14 +48,7 @@
     map.addLayer(markersLayer);
     updateTrains();
     
-    // Set a custom formatter for tooltips
-    // Provide a function that returns html to be used in tooltip
-    mapbox.markers.interaction.formatter(function(feature) {
-        var o = '<h2>' + feature.properties.message + '</h2>';
-
-        return o;
-    });
-
+    
     function updateTrains() {
       reqwest({
           url: 'http://dtm-api.herokuapp.com/json_it.json?callback=?',
@@ -69,6 +62,13 @@
           window.setTimeout(updateTrains, 10000);
       }});
     }
+    // Set a custom formatter for tooltips
+    // Provide a function that returns html to be used in tooltip
+  	interaction.formatter(function(feature) {
+        var o = '<h2>' + feature.properties.message + '</h2>';
+        return o;
+    });
+
   });
 </script>
 </body>
