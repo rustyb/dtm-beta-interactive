@@ -46,21 +46,7 @@
     var markerLayer = mapbox.markers.layer();
     mapbox.markers.interaction(markerLayer);
     map.addLayer(markerLayer);
-    
     updateTrains();
-    
-    
-    function updateTrains() {
-      reqwest({
-          url: 'http://dtm-api.herokuapp.com/json_it.json?callback=?',
-          type: 'jsonp',
-          jsonCallback: 'callback',
-        contentType: "application/json",
-        accepts: "application/json",
-        success: function(d) {
-          var f = processToGeoJSON(d.ArrayOfObjTrainPositions.objTrainPositions);
-          markerLayer.features(f);
-    }
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
     interaction.formatter(function(feature) {
@@ -71,10 +57,22 @@
 
         return o;
     });
-    
-    
 
+    function updateTrains() {
+      reqwest({
+          url: 'http://dtm-api.herokuapp.com/json_it.json?callback=?',
+          type: 'jsonp',
+          jsonCallback: 'callback',
+        contentType: "application/json",
+        accepts: "application/json",
+        success: function(d) {
+          var f = processToGeoJSON(d.ArrayOfObjTrainPositions.objTrainPositions);
+          markersLayer.features(f);
+          window.setTimeout(updateTrains, 10000);
+      }});
+    }
   });
 </script>
+    
 </body>
 </html>
