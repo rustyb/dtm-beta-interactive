@@ -48,7 +48,7 @@
     map.addLayer(markersLayer);
     updateTrains();
     
-    mapbox.markers.interaction.formatter( markersLayer {
+    mapbox.markers.interaction.formatter( markersLayer(feature) {
     var o = '<h1>' +
         + feature.properties.title +
         '</h1>';
