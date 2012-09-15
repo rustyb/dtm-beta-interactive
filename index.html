@@ -64,7 +64,7 @@
     // Set a custom formatter for tooltips
     	// Provide a function that returns html to be used in tooltip
   		// The default formatter function
-		markerLayer.features.interaction.formatter(function(feature) {
+		interaction.formatter(function(feature) {
         	var o = '<h2>' + props.message + '</h2>';
         	return o;
     	});
