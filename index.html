@@ -66,10 +66,7 @@
     // Set a custom formatter for tooltips
     // Provide a function that returns html to be used in tooltip
   	interaction.formatter(function(feature) {
-       	var o = '', props = feature.properties;
-      	if (props.title) {
-        o += '<h1 class="marker-title">' + props.title + '</h1>';
-    	}
+        var o = '<h2>' + props.message + '</h2>';
         return o;
     });
     
