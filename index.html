@@ -48,6 +48,13 @@
     map.addLayer(markersLayer);
     updateTrains();
     
+    // Set a custom formatter for tooltips
+    // Provide a function that returns html to be used in tooltip
+    markers.interaction.formatter(function(feature) {
+        var o = '<h2>' + feature.properties.message + '</h2>';
+
+        return o;
+    });
 
     function updateTrains() {
       reqwest({
@@ -59,13 +66,6 @@
         success: function(d) {
           var f = processToGeoJSON(d.ArrayOfObjTrainPositions.objTrainPositions);
           markersLayer.features(f);
-          // Set a custom formatter for tooltips
-    // Provide a function that returns html to be used in tooltip
-    interaction.formatter(function(feature) {
-        var o = '<h2>' + feature.properties.status + '</h2>';
-
-        return o;
-    });
           window.setTimeout(updateTrains, 10000);
       }});
     }
