@@ -65,7 +65,7 @@
     	// Provide a function that returns html to be used in tooltip
   		// The default formatter function
 		interaction.formatter(function(feature) {
-        	var o = '<h2>' + props.message + '</h2>';
+        	var o = '<h2>' + feature.message + '</h2>';
         	return o;
     	});
           window.setTimeout(updateTrains, 10000);
