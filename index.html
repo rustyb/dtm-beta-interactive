@@ -26,7 +26,7 @@
             },
             properties: {
                 direction: t.Direction,
-                title: t.PublicMessage.replace(/\n/g, '<br />'),
+                title: t.PublicMessage.replace(/\\n/g, "<br/>"),
                 message: t.PublicMessage,
                 status: t.TrainStatus,
                 'marker-symbol': 'rail',
