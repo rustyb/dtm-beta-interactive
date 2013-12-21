@@ -41,7 +41,6 @@ function makeGeoJSON(trains) {
 }
 
 function repeatMe() {			
-	markerLayer1.setGeoJSON([]); //clear the markers layer	
 	$.getJSON(config.apiUrl, {}, function(data) {
 		var trains = makeGeoJSON(data['ArrayOfObjTrainPositions']['objTrainPositions']);
 		markerLayer1.setGeoJSON({type: 'FeatureCollection', features: features});
