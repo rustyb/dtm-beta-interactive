@@ -8,9 +8,12 @@ var config = {
 
 //<![CDATA[
 var markerLayer1 = L.mapbox.markerLayer();
-var features = [];
+markerLayer1.addTo(map);
+var features = [];			
 
 function makeGeoJSON(trains) {
+	features.length = 0;
+	console.log(features);
       /* Place marker for each train. */
       for (var i = 0; i < trains.length; i++) {
         /* Get marker's location */
@@ -34,30 +37,29 @@ function makeGeoJSON(trains) {
 		        });
 
 	}
-	return features;
+    
 }
 
-function repeatMe() {
-	markerLayer1.setGeoJSON([]); //clear the markers layer
-	
+function repeatMe() {			
+	markerLayer1.setGeoJSON([]); //clear the markers layer	
 	$.getJSON(config.apiUrl, {}, function(data) {
 		var trains = makeGeoJSON(data['ArrayOfObjTrainPositions']['objTrainPositions']);
-        markerLayer1.setGeoJSON({type: 'FeatureCollection', features: features});
-		
-    });
-		
-	markerLayer1.addTo(map);
+		markerLayer1.setGeoJSON({type: 'FeatureCollection', features: features});
+		console.log(features);
 		markerLayer1.eachLayer(function(layer) {
 		    // here you call `bindPopup` with a string of HTML you create - the feature
 		    // properties declared above are available under `layer.feature.properties`
 		    var content = '<h1>' + layer.feature.properties.title + '<\/h1>' +
-		        '<p>' + layer.feature.properties.description + '<\/p>';
+		        '<p>' + layer.feature.properties.description.replace(/\n/g, '<br />') + '<\/p>';
 				layer.bindPopup(content, { closeButton: true, maxWidth: 200 });
 		});
+    });
+	window.setTimeout(repeatMe, 5000);
 
 }
 repeatMe();
-setInterval(repeatMe, 10000);
+//setInterval(repeatMe, 10000);
+
 
 
 	
