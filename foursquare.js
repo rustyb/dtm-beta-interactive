@@ -8,6 +8,10 @@ foursquare.venues = [];
 // Get venues
 foursquare.start = _.throttle(function(){
     // Default ajax params
+<<<<<<< HEAD
+=======
+  	//MM_map.removeLayer(venueLayer);
+>>>>>>> 5cb6a0149354f48984c26692fbcf4e0d77983ac4
     foursquare.getVenues();
 }, 20000);
 
@@ -121,3 +125,69 @@ foursquare.processVenues = function(d) {
 	foursquare.start();
 };
 
+<<<<<<< HEAD
+=======
+foursquare.refresh = function(coords) {
+
+    // Remove active states
+    $('.venue, .mmg').removeClass('active');
+    $('.venue, .state-group').removeClass('hidden');
+    $('#no-venues, #showall').addClass('hidden');
+
+    var radius = foursquare.settings.radius,
+        closest = { dist: radius, id: '', loc: {} };
+
+    // Loop through venues and calculate distance
+    _.each(foursquare.venues, function(venue) {
+        var center = coords,
+            location = { lat: venue.TrainLongitude, lon: venue.TrainLatitude },
+            distance = MM.Location.distance(center, location);
+
+        // Hide venues outsite radius,
+        if (distance > radius /* 5 miles in meters */) {
+            $('[href=#' + venue.id + ']').parent().parent().addClass('hidden');
+        } else {
+            if (distance < closest.dist) {
+                closest = { dist: distance, id: venue.id,  loc: location};
+            }
+        }
+    });
+
+    // Hide labels
+    $('.state-group').each(function() {
+        if($('.venue', this).not('.hidden').size() === 0)
+            $(this).addClass('hidden');
+    });
+
+    // Display a 'show all' link
+    $('#showall').removeClass('hidden');
+
+    // Show 'no results' message'
+    if($('.venue').not('.hidden').size() === 0)
+        $('#no-venues').removeClass('hidden');
+
+    // If there are results
+    if(closest.id) {
+        $('[href=#' + closest.id + ']').parent().parent().addClass('active');
+        $('#' + closest.id).addClass('active');
+
+        // Center on point
+        MM_map.zoom(14).center(locationOffset(closest.loc));
+    } else {
+        MM_map.zoom(8).center(locationOffset(coords));
+    }
+};
+
+// Calculate offset given #content
+function locationOffset(location) {
+    var offset = MM_map.locationPoint({
+            lat: location.lat,
+            lon: location.lon
+        });
+    offset = MM_map.pointLocation({
+        x: offset.x - $('#content').width() / 2,
+        y: offset.y
+    });
+    return offset;
+}
+>>>>>>> 5cb6a0149354f48984c26692fbcf4e0d77983ac4

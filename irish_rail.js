@@ -41,7 +41,6 @@ function repeatMe() {
 	markerLayer1.setGeoJSON([]); //clear the markers layer
 	
 	$.getJSON(config.apiUrl, {}, function(data) {
-		console.log(data);
 		var trains = makeGeoJSON(data['ArrayOfObjTrainPositions']['objTrainPositions']);
         markerLayer1.setGeoJSON({type: 'FeatureCollection', features: features});
 		
@@ -58,7 +57,7 @@ function repeatMe() {
 
 }
 repeatMe();
-setInterval(repeatMe, 5000);
+setInterval(repeatMe, 10000);
 
 
 	
