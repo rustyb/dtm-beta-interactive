@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <title>Foursquare Store Locator</title>
+	<link href='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.css' rel='stylesheet' />
+	<script src='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.js'></script>
     <link rel="stylesheet" href="map.css" type="text/css" />
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <link rel="shortcut icon" href="http://mapbox.com/images/favicon.ico" type="image/x-icon" />
 </head>
 <body class="left">
     <div id="content"><div class="limiter">
@@ -14,28 +15,13 @@
         <div id="no-venues" class="hidden">Oops! Looks like there are no <strong>sweetgreen</strong> locations within five miles of this address. Try another search.</div>
     </div></div>
     <div id="map" class="map"></div>
-    <a href="https://foursquare.com/" target="_blank">
-        <img id="fsq-attribution" src="img/powered-by.png">
-    </a>
-    <div id="search">
-       <form class="geocode">
-         <input placeholder='Enter city, state, or ZIP' type="text">
-         <input type='submit' />
-         <div id='geocode-error'></div>
-       </form>
-    </div>
+   
+    
 
     <!-- External libraries and site script -->
-    <script src="ext/jquery.min.js"></script>
-    <script src="ext/underscore.min.js"></script>
-    <script src="ext/modestmaps.min.js"></script>
-    <script src="ext/wax/wax.mm.js"></script>
-    <script src="ext/wax/wax.ext.js"></script>
-    <script src="ext/easey.js"></script>
-    <script src="ext/easey.handlers.js"></script>
-    <script src="ext/mmg.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="script.js"></script>
-    <script src="foursquare.js"></script>
+    <script src="irish_rail.js"></script>
     
     <!-- Site configuration -->
     <script type="text/javascript">
@@ -45,24 +31,8 @@
 		        withCredentials: true
 		    }
 		});
-        
-
-        // Make a new map in #map
-//http://a.tiles.mapbox.com/v3/dhcole.map-qkbbib4q.jsonp
-        var main = Map('map', {
-            api: 'http://a.tiles.mapbox.com/v3/rusty.map-dqtn0sfi.jsonp',
-            center: {
-                lat: 53.3428,
-                lon: -6.2661,
-                zoom: 13
-            },
-            zoomRange: [1, 17],
-            features: [
-                'zoomwheel',
-                'zoombox',
-                'zoompan',
-            ]
-        }, foursquare.start);
+		
+		
 
     </script>
 </body>
