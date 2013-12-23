@@ -21,7 +21,7 @@ function makeGeoJSON(trains) {
           trains[i]['TrainLatitude'],
           trains[i]['TrainLongitude']
         );
-
+ train_dis = trains[i]['PublicMessage'].replace(/\\n/g, '<br />'); 
 		features.push({
 		            type: 'Feature',
 		            geometry: {
@@ -32,7 +32,7 @@ function makeGeoJSON(trains) {
 		                'marker-color': '#000',
 		                'marker-symbol': 'rail',
 		                title: trains[i]['TrainCode'],
-						description: trains[i]['PublicMessage'].replace(/\n/g, '<br />')
+						description:  train_dis
 		            }
 		        });
 
@@ -49,11 +49,11 @@ function repeatMe() {
 		    // here you call `bindPopup` with a string of HTML you create - the feature
 		    // properties declared above are available under `layer.feature.properties`
 		    var content = '<h1>' + layer.feature.properties.title + '<\/h1>' +
-		        '<p>' + layer.feature.properties.description.replace(/\n/g, '<br />') + '<\/p>';
+		        '<p>' + layer.feature.properties.description.replace(/\\n/g, '<br />') + '<\/p>';
 				layer.bindPopup(content, { closeButton: true, maxWidth: 200 });
 		});
     });
-	window.setTimeout(repeatMe, 5000);
+	window.setTimeout(repeatMe, 10000);
 
 }
 repeatMe();
