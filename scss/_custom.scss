@@ -2,6 +2,12 @@
 // CUSTOM STYLE SHEET FOR USE WITH THE MAP
 //
 
+.map {
+height: 100%;
+width: 100%;
+min-height: 650px;
+z-index: 0;
+}
 #onscreen .item {
 	padding:5px 0px;
 	font-size:14px;

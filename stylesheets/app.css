@@ -1,11 +1,19 @@
 @import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
 /* line 5, ../scss/_custom.scss */
+.map {
+  height: 100%;
+  width: 100%;
+  min-height: 650px;
+  z-index: 0;
+}
+
+/* line 11, ../scss/_custom.scss */
 #onscreen .item {
   padding: 5px 0px;
   font-size: 14px;
 }
 
-/* line 10, ../scss/_custom.scss */
+/* line 16, ../scss/_custom.scss */
 #onscreen .item .info {
   margin: 0 0 0 31px;
   padding: 0 0 13px 26px;
@@ -14,7 +22,7 @@
   border-width: 0 0 0 5px;
 }
 
-/* line 17, ../scss/_custom.scss */
+/* line 23, ../scss/_custom.scss */
 #onscreen .item .title {
   position: absolute;
   width: 56px;
@@ -24,7 +32,7 @@
   line-height: 1em;
 }
 
-/* line 26, ../scss/_custom.scss */
+/* line 32, ../scss/_custom.scss */
 #onscreen .item:hover, #onscreen .item:hover .title {
   background: #ccc;
   cursor: pointer;
