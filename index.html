@@ -1,19 +1,50 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foursquare Store Locator</title>
 	<link href='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.css' rel='stylesheet' />
 	<script src='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.js'></script>
-    <link rel="stylesheet" href="map.css" type="text/css" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/app.css" />
+    <script src="bower_components/modernizr/modernizr.js"></script>
+	<style>
+	.map {
+	height: 100%;
+	width: 100%;
+	min-height: 600px;
+	z-index: 0;
+	}
+	</style>
 </head>
 <body>
-    
-    <div id="map" class="map"></div>
+			<div class="small-3 columns">
+				<h2>Dublin Frequent Transport Map</h2>
+				<p>Welcome to the interactive Dublin Frequent Transport Map, here you can find extra information on the transport options of the paper map including live train located.</p>
+				<dl class="accordion" data-accordion>
+				  <dd>
+					<a href="#panel1">Irish Rail Live Trains</a>
+					<div id="panel1" class="content">
+						<div id="onscreen"></div>
+					</div>
+				  </dd>
+				  <dd>
+					<a href="#panel2">Bus Routes</a>
+					<div id="panel2" class="content">
+						<p>Bus Routes go here.</p>
+					</div>
+				   </dd>
+				</dl>
+			</div>
+			<div class="small-9 columns">
+				<div id="map" class="map"></div>
+			</div>
     <!-- External libraries and site script -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="irish_rail.js"></script>
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <script src="js/app.js"></script>
     
     <!-- Site configuration -->
     <script type="text/javascript">
@@ -24,8 +55,6 @@
 		    }
 		});
 		
-		
-
     </script>
 </body>
 </html>

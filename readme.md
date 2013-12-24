@@ -1,146 +1,89 @@
-# Foursquare Store Locator
+### Dublin Frequent Transport Map
 
-This template uses the foursquare API to build a store locator feature that maps all addresses for venues in a foursquare list and allows users to search for closest venues. 
+Queries run to get the routes from the Dublinked files downloaded.
 
-This whole template can be emedded as an iframe or integrated into your existing website template.
+## In QGIS find all the routes from the map.
 
-![](http://farm8.staticflickr.com/7098/7336417746_2fd7fe6fa0_z.jpg)
+	"LineEFA"  IN  ('4', '7','9', '13', '15', '16', '16A', '27', '27B', '39A', '40', '46A', '83', '123', '145', '150')
 
-By adding your store location data to foursquare, you have a simple interface to manage your locations and allow customers interact with them both on-line and off. While browsing the map for nearby locations, users will see the total checkins and foursquare users who have visited your location, and they will have the option to add your location to their foursquare todo list. When users with the foursquare mobile app walk by venues on their todo list, they'll get reminded to check out your store. 
+Next step is to export each of the routes as separate layer for the sake of it.
 
-## About Map Site Templates
+	"service_id"  = '1' AND "route_id"  IN ('0-123-b12-1', '0-13-b12-1', '0-145-b12-1', '0-15-b12-1', '0-150-b12-1', '0-16-b12-1', '0-27-b12-1', '0-27B-b12-1', '0-39A-b12-1', '0-4-b12-1', '0-40-b12-1', '0-46A-b12-1', '0-7-b12-1', '0-83-b12-1', '0-9-b12-1')
 
-[Map Site templates](http://mapbox.com/map-sites) from MapBox are a way to jumpstart building a map-based web feature. The map-site templates bundles common html and css formatting with reusable javascript components. 
+	('4949.67.0-4-b12-1.6.O',
+	'4572.95.0-4-b12-1.8.I',
+	'3973.2412.0-27-b12-1.191.O',
+	'3994.2401.0-27-b12-1.191.O',
+	'4166.2434.0-27-b12-1.193.I',
+	'6006.1742.0-7-b12-1.10.O',
+	'5964.1771.0-7-b12-1.11.O',
+	'6033.1797.0-7-b12-1.12.I',
+	'5965.1818.0-7-b12-1.13.I',
+	'6048.1838.0-7-b12-1.15.O',
+	'6049.1846.0-7-b12-1.17.I',
+	'5648.4140.0-83-b12-1.125.O',
+	'5709.4161.0-83-b12-1.127.O',
+	'5603.4178.0-83-b12-1.48.I',
+	'5622.4209.0-83-b12-1.53.I',
+	'5649.4197.0-83-b12-1.50.I',
+	'5028.2003.0-15-b12-1.147.O',
+	'5044.2038.0-15-b12-1.148.I',
+	'4804.2198.0-16-b12-1.158.O',
+	'4808.2230.0-16-b12-1.160.O',
+	'4721.2232.0-16-b12-1.161.O',
+	'4775.2239.0-16-b12-1.162.I',
+	'3084.2967.0-39A-b12-1.244.O',
+	'3095.2969.0-39A-b12-1.245.O',
+	'3241.2972.0-39A-b12-1.246.I',
+	'3253.2977.0-39A-b12-1.247.I',
+	'3406.347.0-13-b12-1.98.I',
+	'3330.351.0-13-b12-1.130.I',
+	'3324.356.0-13-b12-1.131.I',
+	'3277.357.0-13-b12-1.132.I',
+	'3337.359.0-13-b12-1.133.I',
+	'3404.348.0-13-b12-1.195.I',
+	'3388.238.0-13-b12-1.36.O',
+	'3312.257.0-13-b12-1.37.O',
+	'3355.277.0-13-b12-1.38.O',
+	'3295.281.0-13-b12-1.39.O',
+	'3331.283.0-13-b12-1.40.O',
+	'3357.284.0-13-b12-1.41.O',
+	'3340.292.0-13-b12-1.42.O',
+	'3367.298.0-13-b12-1.43.I',
+	'3283.327.0-13-b12-1.44.I',
+	'6511.3458.0-46A-b12-1.301.I',
+	'6610.3486.0-46A-b12-1.302.O',
+	'6805.3487.0-46A-b12-1.303.O',
+	'6797.3488.0-46A-b12-1.304.O',
+	'6784.3489.0-46A-b12-1.305.O',
+	'6787.3492.0-46A-b12-1.306.O',
+	'6667.3526.0-46A-b12-1.308.O',
+	'6651.3452.0-46A-b12-1.300.I',
+	'6803.3447.0-46A-b12-1.296.I',
+	'6736.3448.0-46A-b12-1.297.I',
+	'6804.3449.0-46A-b12-1.298.I',
+	'4366.1092.0-123-b12-1.373.O',
+	'4283.1126.0-123-b12-1.375.I',
+	'5572.3044.0-40-b12-1.252.I',
+	'5431.3044.0-40-b12-1.252.I',
+	'5566.3007.0-40-b12-1.248.O',
+	'5596.3035.0-40-b12-1.249.O',
+	'5526.3039.0-40-b12-1.250.O',
+	'6162.1293.0-150-b12-1.404.O',
+	'6127.1318.0-150-b12-1.405.I',
+	'6161.1345.0-150-b12-1.405.I',
+	'6136.1347.0-150-b12-1.406.I',
+	'3577.140.0-9-b12-1.27.O',
+	'3686.156.0-9-b12-1.29.I',
+	'6801.4408.0-145-b12-1.391.I',
+	'6808.4409.0-145-b12-1.392.I',
+	'6766.4412.0-145-b12-1.394.I',
+	'6764.4414.0-145-b12-1.395.I',
+	'6760.4415.0-145-b12-1.396.I',	'6289.4418.0-145-b12-1.397.I',	'6364.4423.0-145-b12-1.398.I',	'6779.4452.0-145-b12-1.399.O',	'6794.4455.0-145-b12-1.401.O',	'6780.4456.0-145-b12-1.402.O',	'6423.4460.0-145-b12-1.403.O',	'370.1544.0-27B-b12-1.437.O',	'369.1556.0-27B-b12-1.438.O',	'374.1560.0-27B-b12-1.439.O',	'316.1562.0-27B-b12-1.440.O',	'308.1563.0-27B-b12-1.441.O',	'287.1567.0-27B-b12-1.442.I', '301.1588.0-27B-b12-1.443.I')
 
-To build a project based on this template, fork this repository, edit the html content and css, and alter the configuration script.
-
-To make your custom base map, [sign up for MapBox](http://mapbox.com/plans/) and [create a map](http://mapbox.com/hosting/creating/).
-
-
-## Using this template
-
-Edit the content by adjusting, removing, or adding to `index.html`. This is the main markup document with the content and layout for the map-site.
-
-Adjust the design by editing the `style.css` file and adding any additional supporting structure to `index.html`.
-
-Set the map features by writing a configuration script at the bottom of `index.html`. 
-
-
-## HTML layout
-
-The html markup for the template is in `index.html`. It's a simple html page layout. Generally, you'll want to change the content elements like `title`, `h1`, `img#logo` and `div#about`.
-
-
-## CSS styles
-
-Most of the hard work on a map site build is template design implemented through CSS. This template by default is simple and clean so you can modify or replace it. This design and be completely overridden by applying new CSS styles or changing the exisiting rules in `style.css`.
-
-CSS rules are set in two files:
-
-- `style.css` contains all the layout and typographic styles as well as some overridden styles for map controls, and a [reset stylesheet](http://meyerweb.com/eric/tools/css/reset/). Implement your design by editing this file.
-- `map.css` holds the default map styles from tiles.mapbox.com embeds.
-
-
-## Javascript interaction
-
-All of the external javascript libraries to make the map interactive and connect it to MapBox are stored in the `ext` directory. For this template, we're using [Modest Maps](http://modestmaps.com/) and [Wax](http://mapbox.com/wax) to make the map interactive, [Easey](https://github.com/mapbox/easey) for smooth aninmated panning and zooming, and [MMG](http://mapbox.com/mmg/) for adding markers to the map based on [geojson](http://www.geojson.org/)-formatted data.
-
-An internal javascript library, `script.js`, abstracts common map settings, and `foursquare.js` is the library we put together map the foursquare API.
-
-We're also using [jQuery](http://jquery.com/) for DOM manipulation and handling events, and [Underscore.js](http://documentcloud.github.com/underscore/) for data processing.
-
-### Map configuration
-
-The map is added to the `<div>` container in `index.html` with `id="map"`. Styles to lay out the map container come from `class="map"`.
-
-```html
-<div id="map" class="map"></div>
-```
-
-At the bottom of the `index.html` document, we set up the map. The `id` of the container is the first argument (`'map'`), and an object of options is the second argument. The third arugement is the name of an optional callback function, which we use to start the `foursquare.js` main function, once the map is loaded. 
-
-The only required option is `api`, and it should contain the API URL from MapBox. After you create a new map through your MapBox account, click `embed` on the `info` tab and copy the API URL.
-
-```js
-var main = Map('map', { 
-    api: 'http://a.tiles.mapbox.com/v3/mapbox.map-hv50mbs9.jsonp' 
-});
-```
-
-The map options object can take several options:
-
-- `api` The MapBox API URL from the `embed` button on your map:
-  ![](http://mapbox.com/images/hosting/embedding-4.png)
-- `center` An object of `{ lat: ##, lon: ##, zoom: ## }` that defines the map's initial view. If not is provided, the default center set from MapBox will be used
-- `zoomRange` An array of `[##, ##]` where the first element is the minimum zoom level and the second is the max
-- `features` An array of additional features for the map
-
-The features object may contain any of the following:
-
-- `zoomwheel` Use the scroll wheel on the mouse to zoom the map
-- `tooltips` or `movetips` For layers with interactive overlays, display fixed `tooltips` or `movetips`, which are overlays the follow the cursor
-- `zoombox` Allow uses to zoom to a bounding box by holding the shift key and dragging over the map
-- `zoompan` Show zoom controls on the map
-- `legend` Show a legend on the map. Legends from multiple layers will stack on top of each other
-- `share` Show a share button on the map with Twitter, Facebook links and an embed code for the map. The embedded view of the map will add a `class="embed"` to the `<body>` element of the page for easy theming. For instance, by default the embed layout is a full screen map with the layer switcher over it on the left. The header and content are hidden.
-- `bwdetect` Automatically detect low bandwidth contections and decrease the quality of the map images to accomodate
-
-A map with all the options and a callback function would look like this:
-
-```js
-var main =  Map('map', {
-    api: 'http://a.tiles.mapbox.com/v3/mapbox.map-hv50mbs9.jsonp',
-    center: {
-        lat: 38.8850033656251,
-        lon: -77.01439615889109,
-        zoom: 14
-    },
-    zoomRange: [0, 15],
-    features: [
-        'zoomwheel',
-        'tooltips', // or 'movetips'
-        'zoombox',
-        'zoompan',
-        'legend',
-        'share',
-        'bwdetect'
-    ]
-}, foursquare.start);
-```
-
-### foursquare.js
-
-All data about store locations for this template comes from the foursquare API. Begin by logging into foursquare and [creating a list of all of your venues](http://support.foursquare.com/entries/20386796-how-do-i-add-or-create-a-list). This example pulls addresses and phone numbers from the API, but you could extend it to include business hours, menues, photos and more by entering more information about your stores in their foursquare venue profiles. [See here](http://support.foursquare.com/entries/188296-how-do-i-add-my-business-to-foursquare) more about entering your store locations as foursquare venues.
-
-To connect this template with your foursquare list, add the following to the top of your `index.html` configuration:
-
-```js
-// Set up the foursquare API
-foursquare.settings = {
-    /* foursquare API keys. See: https://foursquare.com/oauth/register */
-    client_id: '1SHOHFLYHC3KIQKMBMKRWHASORK0TPCNPPH04OQCT1Y5ZRGW',
-    client_secret: '2DMK0XSZL3ZMZDNR0G0UQ4ARJYN2HIJXL4FKXZ1WUALXZYZV',
-    /* List ID. See: https://developer.foursquare.com/docs/explore#req=users/self/lists */
-    list: '4fc674d7e4b07a1f71542757',
-    /* Search radius for nearby address matches */
-    radius: 8046.72 // 5 miles in meters
-};
-```
-
-- `client_id` and `client_secret` These are your foursquare API keys. To get them, register your site at https://foursquare.com/oauth/register and replace the ones we are using here.
-- `list` This is the foursquare list ID for the list you made with your locations. To find it, we need to browse the foursquare API. Visit [the foursquare API explorer](https://developer.foursquare.com/docs/explore#req=users/self/lists) and scan the json data until you find the ID for your list in the `items` array.
-  ![](https://img.skitch.com/20120604-geg541i387j3jw176181unef7w.jpg)
-- `radius` This is the radius in meters in which an location is considered a match for an address search. You could also allow the user to set this value by setting it with javascript.
-
-The work of fetching, parsing, mapping, and filtering the venues (store locations) in your foursquare list is all handled by `foursquare.js`. 
 
 ## Further Reading
 
-* [MapBox API](http://mapbox.com/hosting/api/)
-* [MapBox Wax](http://mapbox.com/wax/)
-* [MapBox MMG](http://mapbox.com/mmg/)
-* [MapBox Easey](http://mapbox.com/easey/)
-* [Modest Maps](http://modestmaps.com/)
+* [MapBox API](http://mapbox.com/api/)
 * [jQuery](http://jquery.com/)
-* [Underscore.js](http://documentcloud.github.com/underscore/)
-* [foursquare API](https://developer.foursquare.com/)
+
