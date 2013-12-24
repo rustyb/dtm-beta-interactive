@@ -1,4 +1,4 @@
-var map = L.mapbox.map('map', 'ebow.map-hsqi45u0,rusty.gep9034e',{legendControl: false,shareControl:true, minZoom:10,maxZoom:16})
+var map = L.mapbox.map('map', 'ebow.map-hsqi45u0,rusty.gkm9pb8i',{legendControl: false,shareControl:true, minZoom:10,maxZoom:16})
     .setView([53.3428,-6.2661], 13);
 
 var config = {
