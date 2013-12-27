@@ -17,7 +17,13 @@ L.mapbox.tileLayer('ebow.map-hsqi45u0,rusty.dtm').addTo(map)
           $li.addClass('selected');
 
           // create query based on data from the layer
-          var query = "select * from stops";
+          var query = "	SELECT " +
+				"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stoptimes_freq.trip_id, stoptimes_freq.stop_headsign, stoptimes_freq.stop_sequence" +
+			" FROM" +
+			    " stops" +
+			" INNER JOIN stoptimes_freq ON stoptimes_freq.stop_id = stops.stop_id" +
+			" ORDER BY" +
+			    " stops.stop_id";
 
           if(area !== 'all') {
             //query = "select * from stops where stop_id = '8220DB000006'";
