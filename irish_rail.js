@@ -1,6 +1,6 @@
 var map = L.map('map',{legendControl: false,shareControl:false, minZoom:10,maxZoom:16})
     .setView([53.3428,-6.2661], 12);
-L.mapbox.tileLayer('ebow.map-hsqi45u0').addTo(map)
+L.mapbox.tileLayer('ebow.map-hsqi45u0,rusty.dtm').addTo(map)
 
 // create layer selector
       function createSelector(layer) {
