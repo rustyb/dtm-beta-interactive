@@ -9,15 +9,14 @@
 	  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
 	<![endif]-->
 	<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-	<link href='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.css' rel='stylesheet' />
-	<script src='//api.tiles.mapbox.com/mapbox.js/v1.5.2/mapbox.standalone.js'></script>
-	
     <link rel="stylesheet" href="style.css" type="text/css" />
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="bower_components/modernizr/modernizr.js"></script>
 	<style>
 	#layer_selector {
-        
+        position: absolute;
+        top: 20px;
+        right: 20px;
         padding: 0;
       }
 
@@ -64,23 +63,12 @@
 						<div id="layer_selector" class="cartodb-infobox" style="position:relative;">
 						      <ul>
 						        <li data="all" class="selected">All Stops</li>
-								<li data="4572.95.0-4-b12-1.8.I">Route 4 Inbound</li>
-								<li data="5965.1818.0-7-b12-1.13.I">Route 7 Inbound</li>
-								<li data="3686.156.0-9-b12-1.29.I">Route 9 Inbound</li>
-								<li data="3277.357.0-13-b12-1.132.I">Route 13 Inbound</li>
-								<li data="5044.2038.0-15-b12-1.148.I">Route 15 Inbound</li>
-								<li data="4775.2239.0-16-b12-1.162.I">Route 16 Inbound</li>
-								<li data="4166.2434.0-27-b12-1.193.I">Route 27 Inbound</li>
-								<li data="287.1567.0-27B-b12-1.442.I">Route 27B Inbound</li>
-								<li data="3241.2972.0-39A-b12-1.246.I">Route 39A Inbound</li>
-								<li data="5431.3044.0-40-b12-1.252.I">Route 40 Inbound</li>
-								<li data="6511.3458.0-46A-b12-1.301.I">Route 46A Inbound</li>
-								<li data="5603.4178.0-83-b12-1.48.I">Route 83 Inbound</li>
-								<li data="4283.1126.0-123-b12-1.375.I">Route 123 Inbound</li>
-								<li data="6289.4418.0-145-b12-1.397.I">Route 145 Inbound</li>
-								<li data="6127.1318.0-150-b12-1.405.I">Route 150 Inbound</li>
+						        <li data="287.1567.0-27B-b12-1.442.I">Route 27B Inbound</li>
+						        <li data="308.1563.0-27B-b12-1.441.O">Route 27B Inbound</sup></li>
+						        <li data="5964.1771.0-7-b12-1.11.O">Route 7</sup></li>
+						        <li data="50000">area >50000 km<sup>2</sup></li>
 						      </ul>
-						</div>
+						    </div>
 					</div>
 				   </dd>
 				</dl>
@@ -89,19 +77,82 @@
 			</div>
 			<div class="small-9 columns">
 				<div id="map" class="map"></div>
+				
 			</div>
     <!-- External libraries and site script -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="irish_rail.js"></script>
     <script src="bower_components/foundation/js/foundation.min.js"></script>
     <script src="js/app.js"></script>
     
-    
-	<script type="text/javascript">
-	
+<script type="text/javascript">
+// create layer selector
+      function createSelector(layer) {
+        var sql = new cartodb.SQL({ user: 'rusty1052' });		    
 
-	</script>
+        var $options = $('#layer_selector li');
+        $options.click(function(e) {
+          // get the area of the selected layer
+          var $li = $(e.target);
+          var area = $li.attr('data');
 
+          // deselect all and select the clicked one
+          $options.removeClass('selected');
+          $li.addClass('selected');
+
+          // create query based on data from the layer
+          var query = "select * from stops";
+
+          if(area !== 'all') {
+            //query = "select * from stops where stop_id = '8220DB000006'";
+			query = "SELECT " +
+				"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stoptimes_freq.trip_id, stoptimes_freq.stop_headsign" +
+			" FROM" +
+			    " stops" +
+			" INNER JOIN stoptimes_freq ON stoptimes_freq.stop_id = stops.stop_id" +
+			" WHERE stoptimes_freq.trip_id = '"+ area + "'" +
+			" ORDER BY" +
+			    " stops.stop_id";
+          }
+
+          // change the query in the layer to update the map
+          layer.setQuery(query);
+		  layer.setCartoCSS("#stop{marker-fill: #7F3F98;marker-line-color: #FFF;}");
+        });
+      }
+
+      function main() {
+        cartodb.createVis('map', 'http://rusty1052.cartodb.com/api/v2/viz/5d319646-6e6e-11e3-995f-53dd66437018/viz.json', {
+          tiles_loader: false,
+          center_lat: 53.34,
+          center_lon: -6.26,
+          zoom: 12
+        })
+        .done(function(vis, layers) {
+          // layer 0 is the base layer, layer 1 is cartodb layer
+
+          createSelector(layers[1]);
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+      }
+
+      window.onload = main;
+
+</script>
+
+
+
+    <!-- Site configuration -->
+    <script type="text/javascript">
+        // Set jQuery ajax to use withCredentials globally
+		$.ajaxSetup({
+		    xhrFields: {
+		        withCredentials: true
+		    }
+		});
+		
+    </script>
 	<script>
 	// Include the UserVoice JavaScript SDK (only needed once on a page)
 	UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/QyPi6gvS6wYVKJWQA6wpOA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();

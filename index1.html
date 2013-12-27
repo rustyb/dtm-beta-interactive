@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Layer selector example | CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #layer_selector {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 0;
+      }
+
+      #layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+
+      #layer_selector li {
+        border-bottom: 1px solid #999;
+        padding: 15px 30px;
+        font-family: "Helvetica", Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+      }
+
+      #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+      }
+
+      #layer_selector li.selected {
+        background-color: #EEE;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="layer_selector" class="cartodb-infobox">
+      <ul>
+        <li data="all" class="selected">All countries</li>
+        <li data="287.1567.0-27B-b12-1.442.I">Route 27B Inbound</li>
+        <li data="308.1563.0-27B-b12-1.441.O">Route 27B Inbound</sup></li>
+        <li data="5964.1771.0-7-b12-1.11.O">Route 7</sup></li>
+        <li data="50000">area >50000 km<sup>2</sup></li>
+      </ul>
+    </div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+    <script>
+      // create layer selector
+	      function createSelector(layer) {
+	        var sql = new cartodb.SQL({ user: 'rusty1052' });		    
+
+	        var $options = $('#layer_selector li');
+	        $options.click(function(e) {
+	          // get the area of the selected layer
+	          var $li = $(e.target);
+	          var area = $li.attr('data');
+
+	          // deselect all and select the clicked one
+	          $options.removeClass('selected');
+	          $li.addClass('selected');
+
+	          // create query based on data from the layer
+	          var query = "select * from stops";
+
+	          if(area !== 'all') {
+	            //query = "select * from stops where stop_id = '8220DB000006'";
+				query = "SELECT " +
+					"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stoptimes_freq.trip_id, stoptimes_freq.stop_headsign" +
+				" FROM" +
+				    " stops" +
+				" INNER JOIN stoptimes_freq ON stoptimes_freq.stop_id = stops.stop_id" +
+				" WHERE stoptimes_freq.trip_id = '"+ area + "'" +
+				" ORDER BY" +
+				    " stops.stop_id";
+	          }
+
+	          // change the query in the layer to update the map
+	          layer.setQuery(query);
+			  layer.setCartoCSS("#stop{marker-fill: #7F3F98;marker-line-color: #FFF;}");
+	          
+	        });
+	      }
+
+	      function main() {
+	        cartodb.createVis('map', 'http://rusty1052.cartodb.com/api/v2/viz/5d319646-6e6e-11e3-995f-53dd66437018/viz.json', {
+	          tiles_loader: true,
+	          center_lat: 53.34,
+	          center_lon: -6.26,
+	          zoom: 12
+	        })
+	        .done(function(vis, layers) {
+	          // layer 0 is the base layer, layer 1 is cartodb layer
+	          createSelector(layers[1]);
+	        })
+	        .error(function(err) {
+	          console.log(err);
+	        });
+	      }
+
+	      window.onload = main;
+	
+    </script>
+  </body>
+</html>

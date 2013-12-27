@@ -6,6 +6,8 @@ Queries run to get the routes from the Dublinked files downloaded.
 
 	"LineEFA"  IN  ('4', '7','9', '13', '15', '16', '16A', '27', '27B', '39A', '40', '46A', '83', '123', '145', '150')
 
+https://github.com/iRail/MIVBSTIBResource/blob/master/MIVBSTIBStopTimesDao.php
+
 Next step is to export each of the routes as separate layer for the sake of it.
 
 	"service_id"  = '1' AND "route_id"  IN ('0-123-b12-1', '0-13-b12-1', '0-145-b12-1', '0-15-b12-1', '0-150-b12-1', '0-16-b12-1', '0-27-b12-1', '0-27B-b12-1', '0-39A-b12-1', '0-4-b12-1', '0-40-b12-1', '0-46A-b12-1', '0-7-b12-1', '0-83-b12-1', '0-9-b12-1')
