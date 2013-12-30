@@ -8,6 +8,8 @@ Queries run to get the routes from the Dublinked files downloaded.
 
 https://github.com/iRail/MIVBSTIBResource/blob/master/MIVBSTIBStopTimesDao.php
 
+http://bl.ocks.org/javisantana/7200781 - how to have mapbox and cartodb play nice
+
 Next step is to export each of the routes as separate layer for the sake of it.
 
 	"service_id"  = '1' AND "route_id"  IN ('0-123-b12-1', '0-13-b12-1', '0-145-b12-1', '0-15-b12-1', '0-150-b12-1', '0-16-b12-1', '0-27-b12-1', '0-27B-b12-1', '0-39A-b12-1', '0-4-b12-1', '0-40-b12-1', '0-46A-b12-1', '0-7-b12-1', '0-83-b12-1', '0-9-b12-1')
@@ -82,6 +84,31 @@ Next step is to export each of the routes as separate layer for the sake of it.
 	'6766.4412.0-145-b12-1.394.I',
 	'6764.4414.0-145-b12-1.395.I',
 	'6760.4415.0-145-b12-1.396.I',	'6289.4418.0-145-b12-1.397.I',	'6364.4423.0-145-b12-1.398.I',	'6779.4452.0-145-b12-1.399.O',	'6794.4455.0-145-b12-1.401.O',	'6780.4456.0-145-b12-1.402.O',	'6423.4460.0-145-b12-1.403.O',	'370.1544.0-27B-b12-1.437.O',	'369.1556.0-27B-b12-1.438.O',	'374.1560.0-27B-b12-1.439.O',	'316.1562.0-27B-b12-1.440.O',	'308.1563.0-27B-b12-1.441.O',	'287.1567.0-27B-b12-1.442.I', '301.1588.0-27B-b12-1.443.I')
+
+	SELECT TR.route_short_name, TR.route_long_name, T.trip_id
+	FROM trips AS T
+	JOIN
+	routes AS TR
+	ON TR.route_id::text = T.route_id::text
+	WHERE TR.route_id IN ('0-123-b12-1', '0-13-b12-1', '0-145-b12-1', '0-15-b12-1', '0-150-b12-1', '0-16-b12-1', '0-27-b12-1', '0-27B-b12-1', '0-39A-b12-1', '0-4-b12-1', '0-40-b12-1', '0-46A-b12-1', '0-7-b12-1', '0-83-b12-1', '0-9-b12-1')
+	ORDER BY TR.route_short_name ASC
+### Find all of the trips which belong to the frequent routes
+	SELECT TR.route_id,TR.route_short_name, TR.route_long_name, T.trip_id, T.direction_id, T.service_id
+	FROM trips AS T
+	JOIN
+	routes AS TR
+	ON TR.route_id::text = T.route_id::text
+	WHERE TR.route_id IN ('0-123-b12-1', '0-13-b12-1', '0-145-b12-1', '0-15-b12-1', '0-150-b12-1', '0-16-b12-1', '0-27-b12-1', '0-27B-b12-1', '0-39A-b12-1', '0-4-b12-1', '0-40-b12-1', '0-46A-b12-1', '0-7-b12-1', '0-83-b12-1', '0-9-b12-1')
+	AND service_id='1'
+	ORDER BY TR.route_short_name ASC
+
+#### find all stop_times for the frequent routes during the week
+SELECT T.trip_id, ST.arrival_time, ST.departure_time, ST.stop_id, ST.stop_sequence, ST.stop_headsign, ST.pickup_type, ST.drop_off_type, ST.shape_dist_traveled
+FROM stop_times AS ST
+JOIN
+rts_freq AS T
+ON T.trip_id::text = ST.trip_id::text
+ORDER BY ST.stop_id
 
 
 ## Further Reading

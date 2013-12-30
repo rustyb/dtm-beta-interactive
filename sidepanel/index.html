@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--Edit the title of the page-->
+    <title>Your page title goes here</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <!--Switch between the different themes changing the stylesheet below - light-theme.css |dark-theme.css -->
+    <link rel="stylesheet" href="css/light-theme.css">
+    <link rel="stylesheet" href="css/makeitresponsive.css">
+  </head>
+  <body>
+
+    <div class="map" id="map"></div>
+
+    <div class="sidepanel">
+      <div class="wrapper">
+        <div class="context subheader">
+          <p>Map created by <a href="#">{Link to your website}</a></p>
+        </div>
+        <h1>Title of your visualization</h1>
+        <p>An earthquake of magnitude 9.0 occurred March 11, 2012, off the northeastern Pacific coast of Japan. The earthquake was followed by a tsunami which would reach 9.3m or higher at Fukushima Prefecture. <a href=''>Combined, the two claimed almost</a> 20,000 lives in the region of Tohoku and triggered nuclear meltdowns at three reactors in Fukushima nuclear plant.</p>
+
+        <!--Copy and paste the div below for creating content blocks-->
+        <h3>Description</h3>
+        <p>The size and age of the Cosmos are beyond ordinary human understanding. Lost somewhere between immensity and eternity is our tiny planetary home. In a cosmic perspective, most human concerns seem insignificant, even petty. And yet our species is young and curious and brave and shows much promise. In the last few millennia we have made the most astonishing, unexpected discoveries about the Cosmos and our place within it, explorations that are exhilarating to consider. They remind us that humans have evolved to wonder, that understanding is a joy, that knowledge is prerequisite to survival. I believe our future depends powerfully on how well we understand this Cosmos in which we float like a mote of dust in the morning sky.</p>
+
+        <h3>Sources</h3>
+        <p>Unexpected discoveries about the <a href="#">Cosmos and our place</a> within it, explorations that are <a href="#">exhilarating</a> to consider. They remind us that humans have evolved to wonder, that understanding is a joy, that knowledge is prerequisite to survival. I believe our future depends powerfully on how well we understand this.</p>
+
+        <div class="context footer">
+          <p>Create your maps with ease using <a href="http://cartodb.com">CartoDB</a></p></p>
+        </div>
+      </div>
+    </div>
+	<!--Custom html for the infowindow customization-->
+	    <!--You can write simple html or use Mustache templates http://mustache.github.com/-->
+	    <!--Content.data contains the field info-->
+	    <script type="infowindow/html" id="infowindow_template">
+		<div class="cartodb-popup header yellow">
+		  <a href="#close" class="cartodb-popup-close-button close">x</a>
+		  <div class="cartodb-popup-header">
+		    <h1>{{content.data.stop_headsign}}</h1>
+		    <span class="separator"></span>
+		  </div>
+		  <div class="cartodb-popup-content-wrapper">
+		    <div class="cartodb-popup-content">
+		      <h4>stop_name</h4>
+		      <p>{{content.data.stop_name}}</p>
+		      <h4>stop_sequence</h4>
+		      <p>{{content.data.stop_sequence}}</p>
+		    </div>
+		  </div>
+		  <div class="cartodb-popup-tip-container">
+		  </div>
+		</div>
+	    </script>
+
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+	 
+<!--Change the URL below in order to change the map that is being shown.
+    Go to your map in CartoDB, click on share, and copy the URL undert the API section
+    Check the cartodb.js documentation for more info
+    http://developers.cartodb.com/documentation/cartodb-js.html-->
+    <script type="text/javascript">
+	var map = L.map('map',{legendControl: false,shareControl:true, minZoom:10,maxZoom:16})
+	    .setView([53.3428,-6.2661], 12);
+
+	// create layer selector
+	      function createSelector(layer) {
+	        var sql = new cartodb.SQL({ user: 'rustyb' });		    
+
+	        var $options = $('#layer_selector li');
+	        $options.click(function(e) {
+	          // get the area of the selected layer
+	          var $li = $(e.target);
+	          var area = $li.attr('data');
+
+	          // deselect all and select the clicked one
+	          $options.removeClass('selected');
+	          $li.addClass('selected');
+
+	          // create query based on data from the layer
+	          var query = "	SELECT " +
+					"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stops_frequent_copy.trip_id, stops_frequent_copy.stop_headsign, stops_frequent_copy.stop_sequence" +
+				" FROM" +
+				    " stops" +
+				" INNER JOIN stops_frequent_copy ON stops_frequent_copy.stop_id = stops.stop_id" +
+				" ORDER BY" +
+				    " stops.stop_id";
+
+	          if(area !== 'all') {
+	            //query = "select * from stops where stop_id = '8220DB000006'";
+				query = "SELECT " +
+					"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stops_frequent_copy.trip_id, stops_frequent_copy.stop_headsign, stops_frequent_copy.stop_sequence" +
+				" FROM" +
+				    " stops" +
+				" INNER JOIN stops_frequent_copy ON stops_frequent_copy.stop_id = stops.stop_id" +
+				" WHERE stops_frequent_copy.trip_id = '"+ area + "'" +
+				" ORDER BY" +
+				    " stops.stop_id";
+	          }
+
+	          // change the query in the layer to update the map
+	          layer.setQuery(query);
+			  layer.setCartoCSS("#stop{#stops_frequent_copy[trip_id='4572.95.0-4-b12-1.8.I'] {marker-fill:#F47B20;} #stops_frequent_copy[trip_id='5965.1818.0-7-b12-1.13.I'] {marker-fill:#231F20;}#stops_frequent_copy[trip_id='3686.156.0-9-b12-1.29.I'] {marker-fill:#00B1B0;} #stops_frequent_copy[trip_id='3277.357.0-13-b12-1.132.I'] {marker-fill:#00A14B;} #stops_frequent_copy[trip_id='5044.2038.0-15-b12-1.148.I'] {marker-fill:#A97C50;} #stops_frequent_copy[trip_id='4775.2239.0-16-b12-1.162.I'] {marker-fill:#8DC63F;} #stops_frequent_copy[trip_id='4166.2434.0-27-b12-1.193.I'] {marker-fill:#3C2415;} #stops_frequent_copy[trip_id='287.1567.0-27B-b12-1.442.I'] {marker-fill:#7F3F98;} #stops_frequent_copy[trip_id='3241.2972.0-39A-b12-1.246.I'] {marker-fill:#2E3192;}#stops_frequent_copy[trip_id='5431.3044.0-40-b12-1.252.I'] {marker-fill:#00AEEF;} #stops_frequent_copy[trip_id='6511.3458.0-46A-b12-1.301.I'] {marker-fill:#7F3F98;} #stops_frequent_copy[trip_id='5603.4178.0-83-b12-1.48.I'] {marker-fill:#0063A6;} #stops_frequent_copy[trip_id='4283.1126.0-123-b12-1.375.I'] {marker-fill:#414042;} #stops_frequent_copy[trip_id='6289.4418.0-145-b12-1.397.I'] {marker-fill:#F26522;} #stops_frequent_copy[trip_id='6127.1318.0-150-b12-1.405.I'] {marker-fill:#F47B20;} #stops_frequent_copy[stop_sequence='1']{marker-fill:#FFF; marker-width:12; marker-line-width:4;marker-line-color: #3C2415;}marker-width:13; marker-fill: #7F3F98;marker-line-color: #FFF;marker-line-opacity: 1;}");		
+	        });
+	      }
+
+	cartodb.createLayer(map, 'http://rustyb.cartodb.com/api/v2/viz/af8f28a4-70ee-11e3-8d5e-63a6af564cc5/viz.json')
+	        .addTo(map)
+			.on('done', function(layer) {
+		     createSelector(layer);
+			  layer.getSubLayer(0).infowindow.set('template', $('#infowindow_template').html());
+	          layer.setInteraction(true);
+			  console.log (layer.getSubLayerCount())
+	          layer.on('featureOver', function(e, pos, latlng, data) {
+	          });
+
+	          layer.on('error', function(err) {
+	            cartodb.log.log('error: ' + err);
+	          });
+	        }).on('error', function() {
+	          cartodb.log.log("some error occurred");
+	        });
+
+    </script>
+
+	
+
+  </body>
+      </html>

@@ -1,10 +1,10 @@
 var map = L.map('map',{legendControl: false,shareControl:false, minZoom:10,maxZoom:16})
     .setView([53.3428,-6.2661], 12);
-L.mapbox.tileLayer('ebow.map-hsqi45u0,rusty.dtm').addTo(map)
+L.mapbox.tileLayer('rusty.gm7f9bc4').addTo(map)
 
 // create layer selector
       function createSelector(layer) {
-        var sql = new cartodb.SQL({ user: 'rusty1052' });		    
+        var sql = new cartodb.SQL({ user: 'rustyb' });		    
 
         var $options = $('#layer_selector li');
         $options.click(function(e) {
@@ -17,41 +17,33 @@ L.mapbox.tileLayer('ebow.map-hsqi45u0,rusty.dtm').addTo(map)
           $li.addClass('selected');
 
           // create query based on data from the layer
-          var query = "	SELECT " +
-				"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stoptimes_freq.trip_id, stoptimes_freq.stop_headsign, stoptimes_freq.stop_sequence" +
-			" FROM" +
-			    " stops" +
-			" INNER JOIN stoptimes_freq ON stoptimes_freq.stop_id = stops.stop_id" +
-			" ORDER BY" +
-			    " stops.stop_id";
+          var query = "	SELECT * FROM " +
+			    " stops_frequent_copy_1";
 
           if(area !== 'all') {
             //query = "select * from stops where stop_id = '8220DB000006'";
-			query = "SELECT " +
-				"stops.cartodb_id, stops.stop_id, stops.the_geom,stops.stop_name, stops.the_geom_webmercator, stoptimes_freq.trip_id, stoptimes_freq.stop_headsign, stoptimes_freq.stop_sequence" +
-			" FROM" +
-			    " stops" +
-			" INNER JOIN stoptimes_freq ON stoptimes_freq.stop_id = stops.stop_id" +
-			" WHERE stoptimes_freq.trip_id = '"+ area + "'" +
+			query = "SELECT  * FROM " +
+				    " stops_frequent_copy_1" +
+			" WHERE stops_frequent_copy_1.trip_id = '"+ area + "'" +
 			" ORDER BY" +
-			    " stops.stop_id";
+			    " stops_frequent_copy_1.stop_sequence ASC";
           }
 
           // change the query in the layer to update the map
           layer.setQuery(query);
-		  layer.setCartoCSS("#stop{#stoptimes_freq[trip_id='4572.95.0-4-b12-1.8.I'] {marker-fill:#F47B20;} #stoptimes_freq[trip_id='5965.1818.0-7-b12-1.13.I'] {marker-fill:#231F20;}#stoptimes_freq[trip_id='3686.156.0-9-b12-1.29.I'] {marker-fill:#00B1B0;} #stoptimes_freq[trip_id='3277.357.0-13-b12-1.132.I'] {marker-fill:#00A14B;} #stoptimes_freq[trip_id='5044.2038.0-15-b12-1.148.I'] {marker-fill:#A97C50;} #stoptimes_freq[trip_id='4775.2239.0-16-b12-1.162.I'] {marker-fill:#8DC63F;} #stoptimes_freq[trip_id='4166.2434.0-27-b12-1.193.I'] {marker-fill:#3C2415;} #stoptimes_freq[trip_id='287.1567.0-27B-b12-1.442.I'] {marker-fill:#7F3F98;} #stoptimes_freq[trip_id='3241.2972.0-39A-b12-1.246.I'] {marker-fill:#2E3192;}#stoptimes_freq[trip_id='5431.3044.0-40-b12-1.252.I'] {marker-fill:#00AEEF;} #stoptimes_freq[trip_id='6511.3458.0-46A-b12-1.301.I'] {marker-fill:#7F3F98;} #stoptimes_freq[trip_id='5603.4178.0-83-b12-1.48.I'] {marker-fill:#0063A6;} #stoptimes_freq[trip_id='4283.1126.0-123-b12-1.375.I'] {marker-fill:#414042;} #stoptimes_freq[trip_id='6289.4418.0-145-b12-1.397.I'] {marker-fill:#F26522;} #stoptimes_freq[trip_id='6127.1318.0-150-b12-1.405.I'] {marker-fill:#F47B20;} #stoptimes_freq[stop_sequence='1']{marker-fill:#FFF; marker-width:12; marker-line-width:4;marker-line-color: #3C2415;}marker-width:13; marker-fill: #7F3F98;marker-line-color: #FFF;marker-line-opacity: 1;}");		
+		  layer.setCartoCSS("#stops_frequent_copy_1{#stops_frequent_copy_1[trip_id='4572.95.0-4-b12-1.8.I'] {marker-fill:#F47B20;} #stops_frequent_copy_1[trip_id='5965.1818.0-7-b12-1.13.I'] {marker-fill:#231F20;}#stops_frequent_copy_1[trip_id='3686.156.0-9-b12-1.29.I'] {marker-fill:#00B1B0;} #stops_frequent_copy_1[trip_id='3277.357.0-13-b12-1.132.I'] {marker-fill:#00A14B;} #stops_frequent_copy_1[trip_id='5044.2038.0-15-b12-1.148.I'] {marker-fill:#A97C50;} #stops_frequent_copy_1[trip_id='4775.2239.0-16-b12-1.162.I'] {marker-fill:#8DC63F;} #stops_frequent_copy_1[trip_id='4166.2434.0-27-b12-1.193.I'] {marker-fill:#3C2415;} #stops_frequent_copy_1[trip_id='287.1567.0-27B-b12-1.442.I'] {marker-fill:#7F3F98;} #stops_frequent_copy_1[trip_id='3241.2972.0-39A-b12-1.246.I'] {marker-fill:#2E3192;}#stops_frequent_copy_1[trip_id='5431.3044.0-40-b12-1.252.I'] {marker-fill:#00AEEF;} #stops_frequent_copy_1[trip_id='6511.3458.0-46A-b12-1.301.I'] {marker-fill:#7F3F98;} #stops_frequent_copy_1[trip_id='5603.4178.0-83-b12-1.48.I'] {marker-fill:#0063A6;} #stops_frequent_copy_1[trip_id='4283.1126.0-123-b12-1.375.I'] {marker-fill:#414042;} #stops_frequent_copy_1[trip_id='6289.4418.0-145-b12-1.397.I'] {marker-fill:#F26522;} #stops_frequent_copy_1[trip_id='6127.1318.0-150-b12-1.405.I'] {marker-fill:#F47B20;} #stops_frequent_copy_1[stop_sequence='1']{marker-fill:#FFF; marker-width:12; marker-line-width:4;marker-line-color: #3C2415;}marker-width:8.5; marker-line-width:1.5; marker-fill: #7F3F98; marker-line-color: #FFF;marker-line-opacity: 1;}");		
         });
       }
 
-cartodb.createLayer(map, 'http://rusty1052.cartodb.com/api/v2/viz/5d319646-6e6e-11e3-995f-53dd66437018/viz.json')
+cartodb.createLayer(map, 'http://rustyb.cartodb.com/api/v2/viz/93e6dabc-7101-11e3-aa75-39e8678d6411/viz.json')
         .addTo(map)
 		.on('done', function(layer) {
 	     createSelector(layer);
-          
+          layer.getSubLayer(0).infowindow.set('template', $('#infowindow_template').html());
+		  
           layer.setInteraction(true);
 		
           layer.on('featureOver', function(e, pos, latlng, data) {
-            cartodb.log.log(e, pos, latlng, data);
           });
 
           layer.on('error', function(err) {
